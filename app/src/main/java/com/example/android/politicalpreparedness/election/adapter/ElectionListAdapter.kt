@@ -23,7 +23,7 @@ class ElectionListAdapter(
     }
 
     override fun getItemCount(): Int {
-        return 0
+        return 3
     }
 }
 
