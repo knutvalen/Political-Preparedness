@@ -16,11 +16,8 @@ import timber.log.Timber
 
 class ElectionsFragment : Fragment() {
 
-    //TODO: Declare ViewModel
-
+    private lateinit var binding: FragmentElectionBinding
     private val viewModel: ElectionsViewModel by viewModel()
-    private var viewModelAdapterUpcomingElections: ElectionListAdapter? = null
-    private var viewModelAdapterSavedElections: ElectionListAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,15 +35,25 @@ class ElectionsFragment : Fragment() {
 
         //TODO: Populate recycler adapters
 
-        viewModelAdapterUpcomingElections = ElectionListAdapter(ElectionListClickListener {
+        binding = FragmentElectionBinding.inflate(inflater)
+        binding.viewModel = viewModel
+        return binding.root
+    }
+
+    //TODO: Refresh adapters when fragment loads
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.lifecycleOwner = this
+
+        val viewModelAdapterUpcomingElections = ElectionListAdapter(ElectionListClickListener {
             Timber.d("viewModelAdapterUpcomingElections")
         })
 
-        viewModelAdapterSavedElections = ElectionListAdapter(ElectionListClickListener {
+        val viewModelAdapterSavedElections = ElectionListAdapter(ElectionListClickListener {
             Timber.d("viewModelAdapterSavedElections")
         })
-
-        val binding = FragmentElectionBinding.inflate(inflater)
 
         binding.root.findViewById<RecyclerView>(R.id.recyclerViewUpcomingElections).apply {
             layoutManager = LinearLayoutManager(context)
@@ -57,10 +64,6 @@ class ElectionsFragment : Fragment() {
             layoutManager = LinearLayoutManager(context)
             adapter = viewModelAdapterSavedElections
         }
-
-        return binding.root
     }
-
-    //TODO: Refresh adapters when fragment loads
 
 }
