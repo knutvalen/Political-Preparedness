@@ -55,5 +55,6 @@ dependencies {
     implementation "androidx.room:room-runtime:$version_room"
     kapt "androidx.room:room-compiler:$version_room"
     implementation "com.google.android.gms:play-services-location:$version_play_services_location"
+    implementation "com.google.android.material:material:$version_material"
     //TODO: Add Glide Implementation
 }
