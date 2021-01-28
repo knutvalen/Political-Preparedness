@@ -11,12 +11,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.databinding.FragmentElectionBinding
 import com.example.android.politicalpreparedness.election.adapter.ElectionListClickListener
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
 class ElectionsFragment : Fragment() {
 
     //TODO: Declare ViewModel
 
+    private val viewModel: ElectionsViewModel by viewModel()
     private var viewModelAdapterUpcomingElections: ElectionListAdapter? = null
     private var viewModelAdapterSavedElections: ElectionListAdapter? = null
 

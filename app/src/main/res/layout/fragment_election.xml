@@ -25,6 +25,7 @@
                 android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="@dimen/default_padding"
                 android:text="@string/upcoming_elections"
                 android:textAppearance="?textAppearanceHeadline5" />
 
@@ -50,6 +51,7 @@
                 android:id="@+id/textView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="@dimen/default_padding"
                 android:text="@string/saved_elections"
                 android:textAppearance="?textAppearanceHeadline5" />
 

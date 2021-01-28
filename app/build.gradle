@@ -57,5 +57,7 @@ dependencies {
     implementation "com.google.android.gms:play-services-location:$version_play_services_location"
     implementation "com.google.android.material:material:$version_material"
     implementation "com.jakewharton.timber:timber:$version_timber"
+    implementation "org.koin:koin-android:$version_koin"
+    implementation "org.koin:koin-androidx-viewmodel:$version_koin"
     //TODO: Add Glide Implementation
 }
