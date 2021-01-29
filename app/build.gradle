@@ -14,15 +14,12 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
+        def localProperties = new Properties()
+        localProperties.load(new FileInputStream(rootProject.file("local.properties")))
+        buildConfigField("String", "keyCivicInformation", "\"" + localProperties['keyCivicInformation'] + "\"")
     }
     
     buildTypes {
-        debug {
-            def localProperties = new Properties()
-            localProperties.load(new FileInputStream(rootProject.file("local.properties")))
-            buildConfigField("String", "keyCivicInformation", "\"" + localProperties['keyCivicInformation'] + "\"")
-        }
-
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
