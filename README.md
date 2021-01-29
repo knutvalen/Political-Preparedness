@@ -3,4 +3,4 @@
 
 This is the fifth and final assignment of the [Android Kotlin Developer Nanodegree at Udacity](https://www.udacity.com/course/android-kotlin-developer-nanodegree--nd940).
 
-Add your Civic Information API key to your `local.properties` file as `keyCivicinfo=YOUR_API_KEY`. Get your API key from https://developers.google.com/civic-information/docs/using_api.  
+Add your Civic Information API key to your `local.properties` file as `keyCivicInformation=YOUR_API_KEY`. Get your API key from https://developers.google.com/civic-information/docs/using_api.  
