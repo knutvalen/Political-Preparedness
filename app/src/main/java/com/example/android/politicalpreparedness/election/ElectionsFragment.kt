@@ -63,6 +63,12 @@ class ElectionsFragment : Fragment() {
             layoutManager = LinearLayoutManager(context)
             adapter = viewModelAdapterSavedElections
         }
+
+        viewModel.elections.observe(viewLifecycleOwner, { elections ->
+            elections?.apply {
+                viewModelAdapterUpcomingElections.elections = elections
+            }
+        })
     }
 
 }
