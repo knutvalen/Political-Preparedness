@@ -42,17 +42,11 @@ class Repository(
 
             for (i in 0 until elections.length()) {
                 val electionJson = elections.getJSONObject(i)
+                val id = electionJson.getInt("id")
+                val name = electionJson.getString("name")
                 val electionDay = dateFormat.parse(electionJson.getString("electionDay")) ?: continue
                 val division = ElectionAdapter().divisionFromJson(electionJson.getString("ocdDivisionId"))
-
-                val election = Election(
-                        electionJson.getInt("id"),
-                        electionJson.getString("name"),
-                        electionDay,
-                        division
-                )
-
-                electionsList.add(election)
+                electionsList.add(Election(id, name, electionDay, division))
             }
         }
 
