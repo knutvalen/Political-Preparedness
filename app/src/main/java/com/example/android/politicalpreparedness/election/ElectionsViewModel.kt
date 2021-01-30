@@ -18,8 +18,8 @@ class ElectionsViewModel(application: Application, private val repository: Repos
 
     //TODO: Create functions to navigate to saved or upcoming election voter info
 
-    val upcomingElections = repository.elections
-    val savedElections = repository.electionsFollowed
+    val upcomingElections = repository.upcomingElections
+    val savedElections = repository.savedElections
 
     init {
         viewModelScope.launch {

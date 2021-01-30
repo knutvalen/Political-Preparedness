@@ -1,7 +1,7 @@
 package com.example.android.politicalpreparedness
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.Transformations
+import androidx.lifecycle.MutableLiveData
 import com.example.android.politicalpreparedness.database.ElectionDao
 import com.example.android.politicalpreparedness.network.CivicsApi
 import com.example.android.politicalpreparedness.network.jsonadapter.ElectionAdapter
@@ -15,11 +15,14 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class Repository(
-    private val dataAccessObject: ElectionDao,
+    dataAccessObject: ElectionDao,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
-    val elections: LiveData<List<Election>> = dataAccessObject.getElections()
-    val electionsFollowed: LiveData<List<Election>> = dataAccessObject.getElectionsFollowed()
+    private val _upcomingElections = MutableLiveData<List<Election>>()
+    val upcomingElections: LiveData<List<Election>>
+        get() = _upcomingElections
+
+    val savedElections: LiveData<List<Election>> = dataAccessObject.getElections()
 
     suspend fun refreshElections() = withContext(ioDispatcher) {
         try {
@@ -29,7 +32,11 @@ class Repository(
                 .await()
 
             val elections = parseElectionsJsonResult(JSONObject(response))
-            dataAccessObject.cacheElections(*elections.toTypedArray())
+
+            withContext(Dispatchers.Main) {
+                _upcomingElections.value = elections
+            }
+//            dataAccessObject.cacheElections(*elections.toTypedArray())
         } catch (e: Exception) {
             Timber.e(e)
         }
@@ -49,7 +56,7 @@ class Repository(
                 val electionDay = dateFormat.parse(electionJson.getString("electionDay"))
                     ?: continue
                 val division = ElectionAdapter().divisionFromJson(electionJson.getString("ocdDivisionId"))
-                electionsList.add(Election(id, name, electionDay, division, false))
+                electionsList.add(Election(id, name, electionDay, division))
             }
         }
 
