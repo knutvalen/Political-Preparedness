@@ -19,4 +19,7 @@ interface ElectionDao {
     @Query("SELECT * FROM election_table ORDER BY electionDay ASC")
     fun getElections(): LiveData<List<Election>>
 
+    @Query("SELECT * FROM election_table WHERE following = 1 ORDER BY electionDay ASC")
+    fun getElectionsFollowed(): LiveData<List<Election>>
+
 }

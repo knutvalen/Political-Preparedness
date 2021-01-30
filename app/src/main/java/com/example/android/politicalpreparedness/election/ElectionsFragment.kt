@@ -25,22 +25,12 @@ class ElectionsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        //TODO: Add ViewModel values and create ViewModel
-
-        //TODO: Add binding values
-
         //TODO: Link elections to voter info
-
-        //TODO: Initiate recycler adapters
-
-        //TODO: Populate recycler adapters
 
         binding = FragmentElectionBinding.inflate(inflater)
         binding.viewModel = viewModel
         return binding.root
     }
-
-    //TODO: Refresh adapters when fragment loads
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -64,9 +54,15 @@ class ElectionsFragment : Fragment() {
             adapter = viewModelAdapterSavedElections
         }
 
-        viewModel.elections.observe(viewLifecycleOwner, { elections ->
+        viewModel.upcomingElections.observe(viewLifecycleOwner, { elections ->
             elections?.apply {
                 viewModelAdapterUpcomingElections.elections = elections
+            }
+        })
+
+        viewModel.savedElections.observe(viewLifecycleOwner, { elections ->
+            elections?.apply {
+                viewModelAdapterSavedElections.elections = elections
             }
         })
     }
