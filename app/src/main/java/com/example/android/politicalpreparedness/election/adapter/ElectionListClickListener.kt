@@ -1,5 +1,9 @@
 package com.example.android.politicalpreparedness.election.adapter
 
-class ElectionListClickListener(val clickListener: () -> Unit) {
-    fun onClick() = clickListener()
+import com.example.android.politicalpreparedness.network.models.Election
+
+class ElectionListClickListener(val clickListener: (election: Election) -> Unit) {
+
+    fun onClick(election: Election) = clickListener(election)
+
 }

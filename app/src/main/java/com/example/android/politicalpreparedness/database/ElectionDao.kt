@@ -7,10 +7,6 @@ import com.example.android.politicalpreparedness.network.models.Election
 @Dao
 interface ElectionDao {
 
-    //TODO: Add insert query
-
-    //TODO: Add select all election query
-
     //TODO: Add select single election query
 
     //TODO: Add delete query
@@ -23,5 +19,4 @@ interface ElectionDao {
     @Query("SELECT * FROM election_table ORDER BY electionDay ASC")
     fun getElections(): LiveData<List<Election>>
 
-//    suspend fun getElections(): List<Election>
 }

@@ -33,14 +33,5 @@ class ElectionListAdapter(
     override fun getItemCount(): Int {
         return elections.size
     }
+
 }
-
-//TODO: Bind ViewHolder
-
-//TODO: Add companion object to inflate ViewHolder (from)
-
-//TODO: Create ElectionViewHolder
-
-//TODO: Create ElectionDiffCallback
-
-//TODO: Create ElectionListener
