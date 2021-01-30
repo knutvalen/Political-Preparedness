@@ -11,7 +11,6 @@ import retrofit2.http.GET
 
 private const val BASE_URL = "https://www.googleapis.com/civicinfo/v2/"
 
-// TODO: Add adapters for Java Date and custom adapter ElectionAdapter (included in project)
 private val moshi = Moshi.Builder()
         .add(KotlinJsonAdapterFactory())
         .build()
@@ -29,8 +28,6 @@ private val retrofit = Retrofit.Builder()
  */
 
 interface CivicsApiService {
-    //TODO: Add elections API Call
-
     //TODO: Add voterinfo API Call
 
     //TODO: Add representatives API Call
