@@ -79,4 +79,5 @@
         <!-- TODO: Add button to save election to Room -->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

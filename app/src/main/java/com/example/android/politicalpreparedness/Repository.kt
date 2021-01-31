@@ -31,36 +31,13 @@ class Repository(
                 .getElectionsAsync()
                 .await()
 
-            val elections = parseElectionsJsonResult(JSONObject(response))
-
             withContext(Dispatchers.Main) {
-                _upcomingElections.value = elections
+                _upcomingElections.value = response.elections
             }
 //            dataAccessObject.cacheElections(*elections.toTypedArray())
         } catch (e: Exception) {
             Timber.e(e)
         }
-    }
-
-    private fun parseElectionsJsonResult(jsonResult: JSONObject): ArrayList<Election> {
-        val electionsList = ArrayList<Election>()
-
-        if (jsonResult.has("elections")) {
-            val elections = jsonResult.getJSONArray("elections")
-            val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-
-            for (i in 0 until elections.length()) {
-                val electionJson = elections.getJSONObject(i)
-                val id = electionJson.getInt("id")
-                val name = electionJson.getString("name")
-                val electionDay = dateFormat.parse(electionJson.getString("electionDay"))
-                    ?: continue
-                val division = ElectionAdapter().divisionFromJson(electionJson.getString("ocdDivisionId"))
-                electionsList.add(Election(id, name, electionDay, division))
-            }
-        }
-
-        return electionsList
     }
 
 }

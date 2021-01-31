@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.politicalpreparedness.R
@@ -24,9 +25,6 @@ class ElectionsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
-        //TODO: Link elections to voter info
-
         binding = FragmentElectionBinding.inflate(inflater)
         binding.viewModel = viewModel
         return binding.root
@@ -37,11 +35,13 @@ class ElectionsFragment : Fragment() {
         binding.lifecycleOwner = this
 
         val viewModelAdapterUpcomingElections = ElectionListAdapter(ElectionListClickListener {
-            Timber.d("viewModelAdapterUpcomingElections")
+            Timber.d("viewModelAdapterSavedElections:ElectionListClickListener: $it")
+            viewModel.navigateToElectionDetailsFragment(it)
         })
 
         val viewModelAdapterSavedElections = ElectionListAdapter(ElectionListClickListener {
-            Timber.d("viewModelAdapterSavedElections")
+            Timber.d("viewModelAdapterSavedElections:ElectionListClickListener: $it")
+            viewModel.navigateToElectionDetailsFragment(it)
         })
 
         binding.root.findViewById<RecyclerView>(R.id.recyclerViewUpcomingElections).apply {
@@ -63,6 +63,19 @@ class ElectionsFragment : Fragment() {
         viewModel.savedElections.observe(viewLifecycleOwner, { elections ->
             elections?.apply {
                 viewModelAdapterSavedElections.elections = elections
+            }
+        })
+
+        viewModel.selectedElection.observe(viewLifecycleOwner, { election ->
+            if (election != null) {
+                findNavController().navigate(
+                    ElectionsFragmentDirections.actionElectionsFragmentToVoterInfoFragment(
+                        election.id,
+                        election.division
+                    )
+                )
+
+                viewModel.navigateToElectionDetailsFragmentComplete()
             }
         })
     }
