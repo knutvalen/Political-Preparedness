@@ -7,6 +7,7 @@ import com.example.android.politicalpreparedness.network.CivicsApi
 import com.example.android.politicalpreparedness.network.models.Election
 import com.example.android.politicalpreparedness.network.models.VoterInfoResponse
 import kotlinx.coroutines.*
+import retrofit2.HttpException
 import timber.log.Timber
 
 class Repository(
@@ -23,6 +24,10 @@ class Repository(
     val voterinfo: LiveData<VoterInfoResponse>
         get() = _voterinfo
 
+    private val _apiError = MutableLiveData<String>()
+    val apiError: LiveData<String>
+        get() = _apiError
+
     suspend fun refreshUpcomingElections() = withContext(ioDispatcher) {
         try {
             val response = CivicsApi
@@ -33,9 +38,14 @@ class Repository(
             withContext(Dispatchers.Main) {
                 _upcomingElections.value = response.elections
             }
-        } catch (e: Exception) {
-            //TODO: do not swallow
-            Timber.e(e)
+        } catch (e: HttpException) {
+            @Suppress("BlockingMethodInNonBlockingContext")
+            val errorBody = e.response()?.errorBody()?.string()
+            Timber.e(errorBody)
+
+            withContext(Dispatchers.Main) {
+                _apiError.value = errorBody
+            }
         }
     }
 
@@ -44,15 +54,21 @@ class Repository(
         try {
             val response = CivicsApi
                 .retrofitService
-                .getVoterinfoAsync(electionId, address.plus(" ny"))
+                .getVoterinfoAsync(electionId, address.plus(" ny")) // TODO: delete before submission
+//                .getVoterinfoAsync(electionId, address)
                 .await()
 
             withContext(Dispatchers.Main) {
                 _voterinfo.value = response
             }
-        } catch (e: Exception) {
-            //TODO: do not swallow
-            Timber.e(e)
+        } catch (e: HttpException) {
+            @Suppress("BlockingMethodInNonBlockingContext")
+            val errorBody = e.response()?.errorBody()?.string()
+            Timber.e(errorBody)
+
+            withContext(Dispatchers.Main) {
+                _apiError.value = errorBody
+            }
         }
     }
 
@@ -62,6 +78,10 @@ class Repository(
 
     suspend fun deleteElection(electionId: Int) = withContext(ioDispatcher) {
         dataAccessObject.deleteElection(electionId)
+    }
+
+    fun resetErrorMessage() {
+        _apiError.value = null
     }
 
 }

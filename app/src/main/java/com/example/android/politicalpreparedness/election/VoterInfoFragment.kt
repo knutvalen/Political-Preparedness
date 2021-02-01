@@ -2,6 +2,7 @@ package com.example.android.politicalpreparedness.election
 
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.databinding.FragmentVoterInfoBinding
@@ -45,36 +46,27 @@ class VoterInfoFragment : Fragment() {
                 .capitalize(Locale.getDefault())
             val votingLocationURL = voterinfo.state?.get(0)?.electionAdministrationBody?.votingLocationFinderUrl
             val ballotURL = voterinfo.state?.get(0)?.electionAdministrationBody?.ballotInfoUrl
-            val correspondenceAddress = voterinfo.state?.get(0)?.electionAdministrationBody?.correspondenceAddress
+            val correspondenceAddress = voterinfo.state?.get(0)?.electionAdministrationBody?.correspondenceAddress?.toFormattedString()
 
-            binding.electionName.title = electionName
-            binding.electionDate.text = electionDate
+            viewModel.electionName.value = electionName
+            viewModel.electionDate.value = electionDate
+            viewModel.votingLocationURL.value = votingLocationURL
+            viewModel.ballotURL.value = ballotURL
+            viewModel.correspondenceAddress.value = correspondenceAddress
 
             if (votingLocationURL != null || ballotURL != null) {
-                binding.stateHeader.text = getString(R.string.title_election_information)
+                viewModel.electionInformationVisibility.value = View.VISIBLE
             } else {
-                binding.stateHeader.visibility = View.GONE
-            }
-
-            if (votingLocationURL != null) {
-                binding.stateLocations.text = votingLocationURL
-            } else {
-                binding.stateLocations.visibility = View.GONE
-            }
-
-            if (ballotURL != null) {
-                binding.stateBallot.text = ballotURL
-            } else {
-                binding.stateBallot.visibility = View.GONE
+                viewModel.electionInformationVisibility.value = View.GONE
             }
 
             if (correspondenceAddress != null) {
-                binding.stateCorrespondenceHeader.text = getString(R.string.title_state_correspondence)
-                binding.address.text = correspondenceAddress.toFormattedString()
+                viewModel.correspondenceVisibility.value = View.VISIBLE
             } else {
-                binding.address.visibility = View.GONE
+                viewModel.correspondenceVisibility.value = View.GONE
             }
 
+            viewModel.buttonVisibility.value = View.VISIBLE
         })
 
         viewModel.savedElections.observe(viewLifecycleOwner, { savedElections ->
@@ -83,9 +75,16 @@ class VoterInfoFragment : Fragment() {
             val isSaved = savedElections.map { it.id }.contains(electionID)
 
             if (isSaved) {
-                binding.button.text = getString(R.string.unfollow_election)
+                viewModel.buttonText.value = getString(R.string.unfollow_election)
             } else {
-                binding.button.text = getString(R.string.follow_election)
+                viewModel.buttonText.value = getString(R.string.follow_election)
+            }
+        })
+
+        viewModel.apiError.observe(viewLifecycleOwner, { message ->
+            if (message != null) {
+                Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
+                viewModel.displayErrorMessageComplete()
             }
         })
     }
