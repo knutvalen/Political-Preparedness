@@ -9,9 +9,10 @@ interface ElectionDao {
 
     //TODO: Add select single election query
 
-    //TODO: Add delete query
-
     //TODO: Add clear query
+
+    @Query("DELETE FROM election_table WHERE id = :id")
+    fun deleteElection(id: Int)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveElection(election: Election)

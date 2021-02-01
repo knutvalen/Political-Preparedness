@@ -4,18 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.android.politicalpreparedness.database.ElectionDao
 import com.example.android.politicalpreparedness.network.CivicsApi
-import com.example.android.politicalpreparedness.network.jsonadapter.ElectionAdapter
 import com.example.android.politicalpreparedness.network.models.Election
+import com.example.android.politicalpreparedness.network.models.VoterInfoResponse
 import kotlinx.coroutines.*
-import org.json.JSONObject
-import retrofit2.await
 import timber.log.Timber
-import java.text.SimpleDateFormat
-import java.util.*
-import kotlin.collections.ArrayList
 
 class Repository(
-    dataAccessObject: ElectionDao,
+    private val dataAccessObject: ElectionDao,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
     private val _upcomingElections = MutableLiveData<List<Election>>()
@@ -24,7 +19,11 @@ class Repository(
 
     val savedElections: LiveData<List<Election>> = dataAccessObject.getElections()
 
-    suspend fun refreshElections() = withContext(ioDispatcher) {
+    private val _voterinfo = MutableLiveData<VoterInfoResponse>()
+    val voterinfo: LiveData<VoterInfoResponse>
+        get() = _voterinfo
+
+    suspend fun refreshUpcomingElections() = withContext(ioDispatcher) {
         try {
             val response = CivicsApi
                 .retrofitService
@@ -34,10 +33,35 @@ class Repository(
             withContext(Dispatchers.Main) {
                 _upcomingElections.value = response.elections
             }
-//            dataAccessObject.cacheElections(*elections.toTypedArray())
         } catch (e: Exception) {
+            //TODO: do not swallow
             Timber.e(e)
         }
+    }
+
+    suspend fun refreshVoterinfo(electionId: Int, address: String) = withContext(ioDispatcher) {
+        Timber.d("electionId: $electionId, address: $address")
+        try {
+            val response = CivicsApi
+                .retrofitService
+                .getVoterinfoAsync(electionId, address.plus(" ny"))
+                .await()
+
+            withContext(Dispatchers.Main) {
+                _voterinfo.value = response
+            }
+        } catch (e: Exception) {
+            //TODO: do not swallow
+            Timber.e(e)
+        }
+    }
+
+    suspend fun saveElection(election: Election) = withContext(ioDispatcher) {
+        dataAccessObject.saveElection(election)
+    }
+
+    suspend fun deleteElection(electionId: Int) = withContext(ioDispatcher) {
+        dataAccessObject.deleteElection(electionId)
     }
 
 }

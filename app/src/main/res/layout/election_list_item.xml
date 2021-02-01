@@ -21,10 +21,10 @@
         android:onClick="@{() -> clickListener.onClick(election)}">
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/textViewElectionListItemName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="VIP Test Election"
+            android:text="@{election.name}"
             android:textAppearance="?textAppearanceHeadline6"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -32,14 +32,13 @@
             tools:text="VIP Test Election" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/textViewElectionListItemDate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Sun Jun 06 00:00:00 EDT 2021"
             android:textAppearance="?textAppearanceBody1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView3"
+            app:layout_constraintTop_toBottomOf="@+id/textViewElectionListItemName"
             tools:text="Sun Jun 06 00:00:00 EDT 2021" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

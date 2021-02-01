@@ -8,4 +8,8 @@ data class Division(
         val id: String,
         val country: String,
         val state: String
-) : Parcelable
+) : Parcelable {
+    fun toFormattedString(): String {
+        return country.plus(" ").plus(state)
+    }
+}

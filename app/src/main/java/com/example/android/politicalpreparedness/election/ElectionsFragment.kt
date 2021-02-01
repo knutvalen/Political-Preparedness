@@ -35,12 +35,12 @@ class ElectionsFragment : Fragment() {
         binding.lifecycleOwner = this
 
         val viewModelAdapterUpcomingElections = ElectionListAdapter(ElectionListClickListener {
-            Timber.d("viewModelAdapterSavedElections:ElectionListClickListener: $it")
+            Timber.d("ElectionListClickListener: $it")
             viewModel.navigateToElectionDetailsFragment(it)
         })
 
         val viewModelAdapterSavedElections = ElectionListAdapter(ElectionListClickListener {
-            Timber.d("viewModelAdapterSavedElections:ElectionListClickListener: $it")
+            Timber.d("ElectionListClickListener: $it")
             viewModel.navigateToElectionDetailsFragment(it)
         })
 
@@ -55,12 +55,14 @@ class ElectionsFragment : Fragment() {
         }
 
         viewModel.upcomingElections.observe(viewLifecycleOwner, { elections ->
+            Timber.d(elections.toString())
             elections?.apply {
                 viewModelAdapterUpcomingElections.elections = elections
             }
         })
 
         viewModel.savedElections.observe(viewLifecycleOwner, { elections ->
+            Timber.d(elections.toString())
             elections?.apply {
                 viewModelAdapterSavedElections.elections = elections
             }
