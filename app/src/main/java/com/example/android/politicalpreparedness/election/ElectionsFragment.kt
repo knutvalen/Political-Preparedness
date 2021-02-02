@@ -34,14 +34,14 @@ class ElectionsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.lifecycleOwner = this
 
-        val viewModelAdapterUpcomingElections = ElectionListAdapter(ElectionListClickListener {
-            Timber.d("ElectionListClickListener: $it")
-            viewModel.navigateToElectionDetailsFragment(it)
+        val viewModelAdapterUpcomingElections = ElectionListAdapter(ElectionListClickListener { election ->
+            Timber.d("upcomingElections:ElectionListClickListener: $election")
+            viewModel.navigateToElectionDetailsFragment(election)
         })
 
-        val viewModelAdapterSavedElections = ElectionListAdapter(ElectionListClickListener {
-            Timber.d("ElectionListClickListener: $it")
-            viewModel.navigateToElectionDetailsFragment(it)
+        val viewModelAdapterSavedElections = ElectionListAdapter(ElectionListClickListener { election ->
+            Timber.d("savedElections:ElectionListClickListener: $election")
+            viewModel.navigateToElectionDetailsFragment(election)
         })
 
         binding.root.findViewById<RecyclerView>(R.id.recyclerViewUpcomingElections).apply {
@@ -55,14 +55,14 @@ class ElectionsFragment : Fragment() {
         }
 
         viewModel.upcomingElections.observe(viewLifecycleOwner, { elections ->
-            Timber.d(elections.toString())
+            Timber.d("upcomingElections:observer:$elections")
             elections?.apply {
                 viewModelAdapterUpcomingElections.elections = elections
             }
         })
 
         viewModel.savedElections.observe(viewLifecycleOwner, { elections ->
-            Timber.d(elections.toString())
+            Timber.d("savedElections:observer: $elections")
             elections?.apply {
                 viewModelAdapterSavedElections.elections = elections
             }

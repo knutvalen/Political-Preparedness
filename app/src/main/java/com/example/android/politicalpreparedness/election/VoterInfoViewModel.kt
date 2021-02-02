@@ -60,4 +60,8 @@ class VoterInfoViewModel(
         repository.resetErrorMessage()
     }
 
+    fun destroyVoterinfo() {
+        repository.destroyVoterinfo()
+    }
+
 }

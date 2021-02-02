@@ -20,8 +20,8 @@ class Repository(
 
     val savedElections: LiveData<List<Election>> = dataAccessObject.getElections()
 
-    private val _voterinfo = MutableLiveData<VoterInfoResponse>()
-    val voterinfo: LiveData<VoterInfoResponse>
+    private val _voterinfo = MutableLiveData<VoterInfoResponse?>()
+    val voterinfo: LiveData<VoterInfoResponse?>
         get() = _voterinfo
 
     private val _apiError = MutableLiveData<String>()
@@ -54,8 +54,7 @@ class Repository(
         try {
             val response = CivicsApi
                 .retrofitService
-                .getVoterinfoAsync(electionId, address.plus(" ny")) // TODO: delete before submission
-//                .getVoterinfoAsync(electionId, address)
+                .getVoterinfoAsync(electionId, address)
                 .await()
 
             withContext(Dispatchers.Main) {
@@ -82,6 +81,10 @@ class Repository(
 
     fun resetErrorMessage() {
         _apiError.value = null
+    }
+
+    fun destroyVoterinfo() {
+        _voterinfo.value = null
     }
 
 }

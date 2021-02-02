@@ -38,7 +38,7 @@ class VoterInfoFragment : Fragment() {
         binding.lifecycleOwner = this
 
         viewModel.voterinfo.observe(viewLifecycleOwner, { voterinfo ->
-            Timber.d("voterinfo observer: $voterinfo")
+            voterinfo ?: return@observe
 
             val electionName = voterinfo.election.name
             val electionDate = DateFormat.getDateInstance(DateFormat.MEDIUM)
@@ -66,6 +66,10 @@ class VoterInfoFragment : Fragment() {
                 viewModel.correspondenceVisibility.value = View.GONE
             }
 
+            if (votingLocationURL == null || ballotURL == null || correspondenceAddress == null) {
+                Toast.makeText(requireContext(), getString(R.string.some_data_is_missing), Toast.LENGTH_LONG).show()
+            }
+
             viewModel.buttonVisibility.value = View.VISIBLE
         })
 
@@ -87,6 +91,11 @@ class VoterInfoFragment : Fragment() {
                 viewModel.displayErrorMessageComplete()
             }
         })
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel.destroyVoterinfo()
     }
 
 }
