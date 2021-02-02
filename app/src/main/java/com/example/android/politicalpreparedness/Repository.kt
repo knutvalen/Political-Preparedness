@@ -6,6 +6,7 @@ import com.example.android.politicalpreparedness.database.ElectionDao
 import com.example.android.politicalpreparedness.network.CivicsApi
 import com.example.android.politicalpreparedness.network.models.Election
 import com.example.android.politicalpreparedness.network.models.VoterInfoResponse
+import com.example.android.politicalpreparedness.representative.model.Representative
 import kotlinx.coroutines.*
 import retrofit2.HttpException
 import timber.log.Timber
@@ -27,6 +28,10 @@ class Repository(
     private val _apiError = MutableLiveData<String>()
     val apiError: LiveData<String>
         get() = _apiError
+
+    private val _representatives = MutableLiveData<List<Representative>>()
+    val representatives: LiveData<List<Representative>>
+        get() = _representatives
 
     suspend fun refreshUpcomingElections() = withContext(ioDispatcher) {
         try {
@@ -69,6 +74,10 @@ class Repository(
                 _apiError.value = errorBody
             }
         }
+    }
+
+    suspend fun refreshRepresentatives() = withContext(ioDispatcher) {
+        _representatives.value = null // TODO: request data
     }
 
     suspend fun saveElection(election: Election) = withContext(ioDispatcher) {

@@ -26,7 +26,6 @@ class ElectionsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentElectionBinding.inflate(inflater)
-        binding.viewModel = viewModel
         return binding.root
     }
 

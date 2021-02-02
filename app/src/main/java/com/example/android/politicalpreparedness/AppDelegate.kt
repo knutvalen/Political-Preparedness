@@ -4,6 +4,7 @@ import android.app.Application
 import com.example.android.politicalpreparedness.database.ElectionDatabase
 import com.example.android.politicalpreparedness.election.ElectionsViewModel
 import com.example.android.politicalpreparedness.election.VoterInfoViewModel
+import com.example.android.politicalpreparedness.representative.RepresentativeViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
@@ -19,6 +20,7 @@ class AppDelegate : Application() {
         val koinModule = module {
             viewModel { ElectionsViewModel(get(), get()) }
             viewModel { VoterInfoViewModel(get(), get()) }
+            viewModel { RepresentativeViewModel(get(), get()) }
             single { Repository(get()) }
             single { ElectionDatabase.getInstance(this@AppDelegate).electionDao }
         }

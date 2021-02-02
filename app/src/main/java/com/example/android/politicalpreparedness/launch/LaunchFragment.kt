@@ -32,7 +32,7 @@ class LaunchFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        navToRepresentatives()// TODO: delete before submission
+//        navToRepresentatives()// TODO: delete before submission
     }
 
 }

@@ -9,7 +9,9 @@ import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import com.example.android.politicalpreparedness.databinding.FragmentRepresentativeBinding
 import com.example.android.politicalpreparedness.network.models.Address
+import com.example.android.politicalpreparedness.representative.adapter.RepresentativeListAdapter
 import java.util.Locale
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class RepresentativeFragment : Fragment() {
 
@@ -18,12 +20,14 @@ class RepresentativeFragment : Fragment() {
     }
 
     //TODO: Declare ViewModel
+    private lateinit var binding: FragmentRepresentativeBinding
+    private val viewModel: RepresentativeViewModel by viewModel()
 
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         //TODO: Establish bindings
 
@@ -33,8 +37,22 @@ class RepresentativeFragment : Fragment() {
 
         //TODO: Establish button listeners for field and location search
 
-        val binding = FragmentRepresentativeBinding.inflate(inflater)
+        binding = FragmentRepresentativeBinding.inflate(inflater)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.lifecycleOwner = this
+
+        val viewModelAdapter = RepresentativeListAdapter()
+        binding.recyclerViewRepresentatives.adapter = viewModelAdapter
+
+        viewModel.representatives.observe(viewLifecycleOwner, { representatives ->
+            representatives?.apply {
+                viewModelAdapter.submitList(representatives)
+            }
+        })
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
