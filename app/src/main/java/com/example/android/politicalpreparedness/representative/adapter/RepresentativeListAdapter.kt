@@ -33,14 +33,10 @@ class RepresentativeViewHolder(val binding: ViewholderRepresentativeBinding): Re
     fun bind(item: Representative) {
         binding.representative = item
         binding.representativePhoto.setImageResource(R.drawable.ic_profile)
-
-        //TODO: Show social links ** Hint: Use provided helper methods
-        //TODO: Show www link ** Hint: Use provided helper methods
-
+        item.official.channels?.let { showSocialLinks(it) }
+        item.official.urls?.let { showWWWLinks(it) }
         binding.executePendingBindings()
     }
-
-    //TODO: Add companion object to inflate ViewHolder (from)
 
     companion object {
         fun from(parent: ViewGroup): RepresentativeViewHolder {
@@ -88,9 +84,8 @@ class RepresentativeViewHolder(val binding: ViewholderRepresentativeBinding): Re
 
 }
 
-//TODO: Create RepresentativeDiffCallback
-
 class RepresentativeDiffCallback: DiffUtil.ItemCallback<Representative>() {
+
     override fun areItemsTheSame(oldItem: Representative, newItem: Representative): Boolean {
         return oldItem.official.name == newItem.official.name
     }
@@ -98,6 +93,5 @@ class RepresentativeDiffCallback: DiffUtil.ItemCallback<Representative>() {
     override fun areContentsTheSame(oldItem: Representative, newItem: Representative): Boolean {
         return oldItem == newItem
     }
-}
 
-//TODO: Create RepresentativeListener
+}
