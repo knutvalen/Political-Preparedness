@@ -47,6 +47,7 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:$version_kotlin_serialization"
     implementation "androidx.constraintlayout:constraintlayout:$version_constraint_layout"
     implementation "androidx.lifecycle:lifecycle-extensions:$version_lifecycle_extensions"
+    implementation "androidx.fragment:fragment-ktx:$version_fragment"
     implementation "androidx.navigation:navigation-fragment-ktx:$version_navigation"
     implementation "androidx.navigation:navigation-ui-ktx:$version_navigation"
     implementation "com.squareup.retrofit2:retrofit: $version_retrofit"

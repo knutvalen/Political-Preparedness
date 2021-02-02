@@ -24,8 +24,8 @@ class Repository(
     val voterinfo: LiveData<VoterInfoResponse?>
         get() = _voterinfo
 
-    private val _apiError = MutableLiveData<String>()
-    val apiError: LiveData<String>
+    private val _apiError = MutableLiveData<String?>()
+    val apiError: LiveData<String?>
         get() = _apiError
 
     private val _representatives = MutableLiveData<List<Representative>>()

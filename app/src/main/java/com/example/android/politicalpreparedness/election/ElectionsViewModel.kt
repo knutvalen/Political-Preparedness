@@ -17,8 +17,8 @@ class ElectionsViewModel(
     val upcomingElections = repository.upcomingElections
     val savedElections = repository.savedElections
 
-    private val _selectedElection = MutableLiveData<Election>()
-    val selectedElection: LiveData<Election>
+    private val _selectedElection = MutableLiveData<Election?>()
+    val selectedElection: LiveData<Election?>
         get() = _selectedElection
 
     init {
