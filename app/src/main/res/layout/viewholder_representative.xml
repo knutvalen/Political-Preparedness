@@ -19,16 +19,13 @@
             android:id="@+id/representativePhoto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
             android:contentDescription="@string/representative_photo"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
             app:profileImage="@{representative.official.photoUrl}"
-            app:srcCompat="@drawable/ic_profile" />
+            tools:srcCompat="@drawable/ic_profile" />
 
         <TextView
             android:id="@+id/officeName"
@@ -37,6 +34,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
+            android:text="@{representative.office.name}"
             android:textAppearance="?textAppearanceHeadline6"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/representativePhoto"
@@ -48,6 +46,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
+            android:text="@{representative.official.name}"
             android:textAppearance="?textAppearanceBody1"
             app:layout_constraintEnd_toStartOf="@+id/wwwIcon"
             app:layout_constraintStart_toStartOf="@+id/officeName"
@@ -58,7 +57,7 @@
             android:id="@+id/officialParty"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
+            android:text="@{representative.official.party}"
             android:textAppearance="?textAppearanceBody1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/officialName"
@@ -97,7 +96,7 @@
             android:layout_height="@dimen/default_icon_size"
             android:contentDescription="@string/twitter_icon"
             android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@+id/representativePhoto"
+            app:layout_constraintBottom_toBottomOf="@+id/officialParty"
             app:layout_constraintEnd_toEndOf="@+id/officeName"
             app:srcCompat="@drawable/ic_twitter"
             tools:visibility="visible" />
