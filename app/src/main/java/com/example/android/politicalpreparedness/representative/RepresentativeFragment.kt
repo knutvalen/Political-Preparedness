@@ -40,7 +40,7 @@ class RepresentativeFragment : Fragment() {
 
         binding = FragmentRepresentativeBinding.inflate(inflater)
         binding.viewModel = viewModel
-        viewModel.refreshRepresentatives("us ny") // TODO: use real address
+        viewModel.refreshRepresentatives("us ca") // TODO: use real address
         return binding.root
     }
 

@@ -63,5 +63,5 @@ dependencies {
     implementation "com.jakewharton.timber:timber:$version_timber"
     implementation "org.koin:koin-android:$version_koin"
     implementation "org.koin:koin-androidx-viewmodel:$version_koin"
-    //TODO: Add Glide Implementation
+    implementation "com.github.bumptech.glide:glide:$version_glide"
 }
