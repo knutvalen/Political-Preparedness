@@ -28,8 +28,8 @@ class Repository(
     val apiError: LiveData<String?>
         get() = _apiError
 
-    private val _representatives = MutableLiveData<List<Representative>>()
-    val representatives: LiveData<List<Representative>>
+    private val _representatives = MutableLiveData<List<Representative>?>()
+    val representatives: LiveData<List<Representative>?>
         get() = _representatives
 
     suspend fun refreshUpcomingElections() = withContext(ioDispatcher) {
@@ -113,6 +113,10 @@ class Repository(
 
     fun destroyVoterinfo() {
         _voterinfo.value = null
+    }
+
+    fun destroyRepresentatives() {
+        _representatives.value = null
     }
 
 }

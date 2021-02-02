@@ -51,7 +51,7 @@ class RepresentativeFragment : Fragment() {
             if (!requestingLocationUpdates) return
 
             for (location in locationResult.locations) {
-                val address = geoCodeLocation(location)
+                val address = geoCodeLocation(location) ?: continue
                 Timber.d("address: $address")
                 viewModel.refreshRepresentatives(address)
                 binding.state.setNewValue(address.state)
@@ -62,19 +62,10 @@ class RepresentativeFragment : Fragment() {
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
-
-        //TODO: Establish bindings
-
-        //TODO: Define and assign Representative adapter
-
-        //TODO: Populate Representative adapter
-
-        //TODO: Establish button listeners for field and location search
-
         binding = FragmentRepresentativeBinding.inflate(inflater)
         binding.viewModel = viewModel
         return binding.root
@@ -128,6 +119,8 @@ class RepresentativeFragment : Fragment() {
         LocationServices
             .getFusedLocationProviderClient(requireContext())
             .removeLocationUpdates(locationCallback)
+
+        viewModel.destroyRepresentatives()
     }
 
     private fun enableLocation() {
@@ -177,13 +170,18 @@ class RepresentativeFragment : Fragment() {
         }
     }
 
-    private fun geoCodeLocation(location: Location): Address {
+    private fun geoCodeLocation(location: Location): Address? {
         val geocoder = Geocoder(context, Locale.getDefault())
         return geocoder.getFromLocation(location.latitude, location.longitude, 1)
-                .map { address ->
-                    Address(address.thoroughfare, address.subThoroughfare, address.locality, address.adminArea, address.postalCode)
-                }
-                .first()
+            .map { address ->
+                val thoroughfare = address.thoroughfare ?: return@map null
+                val locality = address.locality ?: return@map null
+                val adminArea = address.adminArea ?: return@map null
+                val postalCode = address.postalCode ?: return@map null
+
+                Address(thoroughfare, address.subThoroughfare, locality, adminArea, postalCode)
+            }
+            .firstOrNull()
     }
 
     private fun hideKeyboard() {

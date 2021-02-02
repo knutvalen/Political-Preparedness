@@ -26,16 +26,15 @@
                 android:layout_height="match_parent"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-                <!-- TODO: Add visual styling and content -->
                 <TextView
                     android:id="@+id/search_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@string/representative_search"
+                    android:textAppearance="?textAppearanceHeadline5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <!-- TODO: Add data binding value -->
-                <!-- TODO: Add visual styling and content -->
                 <EditText
                     android:id="@+id/address_line_1"
                     android:layout_width="match_parent"
@@ -47,8 +46,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/search_title" />
 
-                <!-- TODO: Add data binding value -->
-                <!-- TODO: Add visual styling and content -->
                 <EditText
                     android:id="@+id/address_line_2"
                     android:layout_width="match_parent"
@@ -60,8 +57,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/address_line_1" />
 
-                <!-- TODO: Add data binding value -->
-                <!-- TODO: Add visual styling and content -->
                 <EditText
                     android:id="@+id/city"
                     android:layout_width="0dp"
@@ -74,9 +69,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/address_line_2" />
 
-                <!-- TODO: Add default values from provided resources  -->
-                <!-- TODO: Add data binding value -->
-                <!-- TODO: Add visual styling and content -->
                 <Spinner
                     android:id="@+id/state"
                     android:layout_width="0dp"
@@ -88,8 +80,6 @@
                     app:layout_constraintStart_toEndOf="@id/city"
                     app:layout_constraintTop_toTopOf="@id/city" />
 
-                <!-- TODO: Add data binding value -->
-                <!-- TODO: Add visual styling and content -->
                 <EditText
                     android:id="@+id/zip"
                     android:layout_width="0dp"
@@ -103,22 +93,28 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/city" />
 
-                <!-- TODO: Add visual styling and label -->
                 <Button
                     android:id="@+id/button_search"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
                     android:onClick="@{() -> viewModel.refreshRepresentatives()}"
                     android:text="@string/find_my_representatives"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/zip" />
 
-                <!-- TODO: Add visual styling and content -->
                 <Button
                     android:id="@+id/button_location"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
                     android:text="@string/use_my_location"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/button_search" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
