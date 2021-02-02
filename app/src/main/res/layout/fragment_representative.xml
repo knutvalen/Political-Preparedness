@@ -12,12 +12,13 @@
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appbar_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="#000000ff">
 
-            <!-- TODO: Add motion scene to hide form on vertical scroll. -->
-            <androidx.constraintlayout.motion.widget.MotionLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
                 <!-- TODO: Add visual styling and content -->
                 <TextView
@@ -124,9 +125,21 @@
                     app:layout_constraintTop_toBottomOf="@id/representative_title"
                     motion:visibilityMode="ignore" />
 
-            </androidx.constraintlayout.motion.widget.MotionLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/long_text" />
+
+        </androidx.core.widget.NestedScrollView>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

@@ -30,4 +30,9 @@ class LaunchFragment : Fragment() {
         this.findNavController().navigate(LaunchFragmentDirections.actionLaunchFragmentToRepresentativeFragment())
     }
 
+    override fun onResume() {
+        super.onResume()
+        navToRepresentatives()// TODO: delete before submission
+    }
+
 }
