@@ -2,8 +2,9 @@ package com.example.android.politicalpreparedness.representative
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.android.politicalpreparedness.Repository
+import kotlinx.coroutines.launch
 
 class RepresentativeViewModel(
     application: Application,
@@ -11,6 +12,10 @@ class RepresentativeViewModel(
 ) : AndroidViewModel(application) {
 
     val representatives = repository.representatives
+
+    fun refreshRepresentatives(address: String) = viewModelScope.launch {
+        repository.refreshRepresentatives(address)
+    }
 
     //TODO: Establish live data for representatives and address
 

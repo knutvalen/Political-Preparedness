@@ -4,8 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.android.politicalpreparedness.database.ElectionDao
 import com.example.android.politicalpreparedness.network.CivicsApi
-import com.example.android.politicalpreparedness.network.models.Election
-import com.example.android.politicalpreparedness.network.models.VoterInfoResponse
+import com.example.android.politicalpreparedness.network.models.*
 import com.example.android.politicalpreparedness.representative.model.Representative
 import kotlinx.coroutines.*
 import retrofit2.HttpException
@@ -40,8 +39,10 @@ class Repository(
                 .getElectionsAsync()
                 .await()
 
+            val elections = response.elections
+
             withContext(Dispatchers.Main) {
-                _upcomingElections.value = response.elections
+                _upcomingElections.value = elections
             }
         } catch (e: HttpException) {
             @Suppress("BlockingMethodInNonBlockingContext")
@@ -76,8 +77,26 @@ class Repository(
         }
     }
 
-    suspend fun refreshRepresentatives() = withContext(ioDispatcher) {
-        _representatives.value = null // TODO: request data
+    suspend fun refreshRepresentatives(address: String) = withContext(ioDispatcher) {
+        Timber.d("address: $address")
+
+        try {
+            val response = CivicsApi.retrofitService.getRepresentativesAsync(address).await()
+            val representatives = response.asRepresentatives()
+            Timber.d("representatives: $representatives")
+
+            withContext(Dispatchers.Main) {
+                _representatives.value = representatives
+            }
+        } catch (e: HttpException) {
+            @Suppress("BlockingMethodInNonBlockingContext")
+            val errorBody = e.response()?.errorBody()?.string()
+            Timber.e(errorBody)
+
+            withContext(Dispatchers.Main) {
+                _apiError.value = errorBody
+            }
+        }
     }
 
     suspend fun saveElection(election: Election) = withContext(ioDispatcher) {

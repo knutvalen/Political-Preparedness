@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android.politicalpreparedness.databinding.FragmentRepresentativeBinding
 import com.example.android.politicalpreparedness.network.models.Address
 import com.example.android.politicalpreparedness.representative.adapter.RepresentativeListAdapter
@@ -38,6 +39,8 @@ class RepresentativeFragment : Fragment() {
         //TODO: Establish button listeners for field and location search
 
         binding = FragmentRepresentativeBinding.inflate(inflater)
+        binding.viewModel = viewModel
+        viewModel.refreshRepresentatives("us ny") // TODO: use real address
         return binding.root
     }
 
@@ -46,7 +49,11 @@ class RepresentativeFragment : Fragment() {
         binding.lifecycleOwner = this
 
         val viewModelAdapter = RepresentativeListAdapter()
-        binding.recyclerViewRepresentatives.adapter = viewModelAdapter
+
+        binding.recyclerViewRepresentatives.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = viewModelAdapter
+        }
 
         viewModel.representatives.observe(viewLifecycleOwner, { representatives ->
             representatives?.apply {
