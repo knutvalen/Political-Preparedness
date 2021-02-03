@@ -37,7 +37,6 @@ class Repository(
             val response = CivicsApi
                 .retrofitService
                 .getElectionsAsync()
-                .await()
 
             val elections = response.elections
 
@@ -61,7 +60,6 @@ class Repository(
             val response = CivicsApi
                 .retrofitService
                 .getVoterinfoAsync(electionId, address)
-                .await()
 
             withContext(Dispatchers.Main) {
                 _voterinfo.value = response
@@ -81,7 +79,7 @@ class Repository(
         Timber.d("address: $address")
 
         try {
-            val response = CivicsApi.retrofitService.getRepresentativesAsync(address).await()
+            val response = CivicsApi.retrofitService.getRepresentativesAsync(address)
             val representatives = response.asRepresentatives()
             Timber.d("representatives: $representatives")
 
