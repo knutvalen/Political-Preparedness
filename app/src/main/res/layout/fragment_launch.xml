@@ -33,11 +33,24 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/imageViewBallotBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/find_my_representatives"
-            app:srcCompat="@drawable/ballot_logo" />
+            android:contentDescription="@string/ballot_box"
+            app:layout_constraintBottom_toTopOf="@+id/representativeButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            app:layout_constraintWidth_percent="0.6"
+            app:srcCompat="@drawable/ballot_box" />
+
+        <ImageView
+            android:id="@+id/imageViewBallotHand"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/hand_holding_a_ballot"
+            app:srcCompat="@drawable/ballot_hand" />
 
     </androidx.constraintlayout.motion.widget.MotionLayout>
 
