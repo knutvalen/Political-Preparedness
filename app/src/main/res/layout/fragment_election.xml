@@ -8,59 +8,54 @@
         android:layout_height="match_parent"
         tools:context="com.example.android.politicalpreparedness.MainActivity">
 
-        <LinearLayout
-            android:id="@+id/linearLayoutUpcomingElections"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toTopOf="@+id/linearLayoutSavedElections"
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <TextView
+            android:id="@+id/textViewUpcoming"
+            android:layout_width="411dp"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/default_padding"
+            android:text="@string/upcoming_elections"
+            android:textAppearance="?textAppearanceHeadline5"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/default_padding"
-                android:text="@string/upcoming_elections"
-                android:textAppearance="?textAppearanceHeadline5" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerViewUpcomingElections"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="@dimen/default_padding" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/linearLayoutSavedElections"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewUpcomingElections"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:orientation="vertical"
+            android:padding="@dimen/default_padding"
+            app:layout_constraintBottom_toTopOf="@+id/textViewSaved"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewUpcoming" />
+
+        <TextView
+            android:id="@+id/textViewSaved"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/default_padding"
+            android:text="@string/saved_elections"
+            android:textAppearance="?textAppearanceHeadline5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewSavedElections"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:padding="@dimen/default_padding"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayoutUpcomingElections">
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/default_padding"
-                android:text="@string/saved_elections"
-                android:textAppearance="?textAppearanceHeadline5" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerViewSavedElections"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="@dimen/default_padding" />
-
-        </LinearLayout>
+            app:layout_constraintTop_toBottomOf="@+id/textViewSaved" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
