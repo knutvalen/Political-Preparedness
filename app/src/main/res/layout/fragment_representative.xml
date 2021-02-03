@@ -19,7 +19,7 @@
             android:id="@+id/appbar_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#000000ff">
+            android:background="@color/transparent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -28,32 +28,35 @@
 
                 <TextView
                     android:id="@+id/search_title"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="@string/representative_search"
                     android:textAppearance="?textAppearanceHeadline5"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <EditText
                     android:id="@+id/address_line_1"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:autofillHints="@string/address_line_1"
                     android:hint="@string/address_line_1"
                     android:inputType="textPostalAddress"
                     android:text="@={viewModel.addressLine1}"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/search_title" />
 
                 <EditText
                     android:id="@+id/address_line_2"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:autofillHints="@string/address_line_2"
                     android:hint="@string/address_line_2"
                     android:inputType="textPostalAddress"
                     android:text="@={viewModel.addressLine2}"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/address_line_1" />
 
@@ -95,10 +98,10 @@
 
                 <Button
                     android:id="@+id/button_search"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="@dimen/default_margin"
+                    android:layout_marginEnd="@dimen/default_margin"
                     android:onClick="@{() -> viewModel.refreshRepresentatives()}"
                     android:text="@string/find_my_representatives"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -107,10 +110,10 @@
 
                 <Button
                     android:id="@+id/button_location"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="@dimen/default_margin"
+                    android:layout_marginEnd="@dimen/default_margin"
                     android:text="@string/use_my_location"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
